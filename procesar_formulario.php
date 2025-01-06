@@ -55,7 +55,6 @@ $conn->close();
     } else {
         echo "<div class='message'>Error: " . $sql . "<br>" . $conn->error . "</div>";
     }
-}
 
 // Cerrar conexión
 $conn->close();
