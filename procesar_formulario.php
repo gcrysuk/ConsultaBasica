@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Conexión a la base de datos (ajusta según tus datos de conexión)
-$conn = new mysqli('localhost', 'root', '', 'abm_formularios');
+$conn = new mysqli('localhost', 'root', '', 'abm_formulario');
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
