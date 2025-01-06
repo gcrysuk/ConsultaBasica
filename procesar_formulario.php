@@ -17,6 +17,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $conn->real_escape_string($_POST['nombre']);
     $apellido = $conn->real_escape_string($_POST['apellido']);
+    $DNI = $conn->real_escape_string($_POST['DNI']);
     $email = $conn->real_escape_string($_POST['email']);
     $direccion = $conn->real_escape_string($_POST['direccion']);
     $localidad = $conn->real_escape_string($_POST['localidad']);
@@ -24,8 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pais = $conn->real_escape_string($_POST['pais']);
     $carrera = $conn->real_escape_string($_POST['carrera']);
 
+    $DNI = intval($_POST['DNI']);
+if ($DNI === 0) {
+    die("El DNI proporcionado no es válido.");
+}
+
     // Insertar en la tabla `personas`
-    $sql = "INSERT INTO personas (nombre, apellido, email, direccion, localidad, provincia, pais, carrera) 
+    $sql = "INSERT INTO personas (nombre, apellido, email, direccion, localidad, provincia, pais, carrera,DNI) 
             VALUES ('$nombre', '$apellido', '$email', '$direccion', '$localidad', '$provincia', '$pais', '$carrera')";
 
     if ($conn->query($sql) === TRUE) {
