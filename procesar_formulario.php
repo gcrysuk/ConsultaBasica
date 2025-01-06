@@ -3,7 +3,7 @@
 $host = 'localhost'; // Cambiar si es necesario
 $user = 'root'; // Usuario de la base de datos
 $password = ''; // Contraseña de la base de datos
-$dbname = 'abm_formularios';
+$dbname = 'abm_formulario';
 
 // Crear conexión
 $conn = new mysqli($host, $user, $password, $dbname);
