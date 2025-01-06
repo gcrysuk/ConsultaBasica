@@ -30,8 +30,8 @@ if ($DNI === 0) {
     die("El DNI proporcionado no es válido.");
 }
 
-    // Insertar en la tabla `personas`
-    $sql = "INSERT INTO personas (nombre, apellido, email, direccion, localidad, provincia, pais, carrera,DNI) 
+    // Insertar en la tabla `persona`
+    $sql = "INSERT INTO persona (nombre, apellido, email, direccion, localidad, provincia, pais, carrera,DNI) 
             VALUES ('$nombre', '$apellido', '$email', '$direccion', '$localidad', '$provincia', '$pais', '$carrera')";
 
     if ($conn->query($sql) === TRUE) {

@@ -63,6 +63,9 @@
             <label for="apellido">Apellido</label>
             <input type="text" id="apellido" name="apellido" required>
 
+            <label for="DNI">DNI</label>
+            <input type="text" id="DNI" name="DNI" required>
+
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required>
 
