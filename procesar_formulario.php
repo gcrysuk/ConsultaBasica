@@ -13,11 +13,17 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
+// Conexión a la base de datos (ajusta según tus datos de conexión)
+$conn = new mysqli('localhost', 'root', '', 'abm_formularios');
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
+}
+
 // Procesar datos del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = $conn->real_escape_string($_POST['nombre']);
     $apellido = $conn->real_escape_string($_POST['apellido']);
-    $DNI = $conn->real_escape_string($_POST['DNI']);
+    $DNI = intval($_POST['DNI']);  // Convertir DNI a entero
     $email = $conn->real_escape_string($_POST['email']);
     $direccion = $conn->real_escape_string($_POST['direccion']);
     $localidad = $conn->real_escape_string($_POST['localidad']);
@@ -25,14 +31,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pais = $conn->real_escape_string($_POST['pais']);
     $carrera = $conn->real_escape_string($_POST['carrera']);
 
-    $DNI = intval($_POST['DNI']);
-if ($DNI === 0) {
-    die("El DNI proporcionado no es válido.");
-}
+    if ($DNI === 0) {
+        die("El DNI proporcionado no es válido.");
+    }
 
-    // Insertar en la tabla `persona`
-    $sql = "INSERT INTO persona (nombre, apellido, email, direccion, localidad, provincia, pais, carrera,DNI) 
-            VALUES ('$nombre', '$apellido', '$email', '$direccion', '$localidad', '$provincia', '$pais', '$carrera')";
+    // Preparar la consulta para evitar inyecciones SQL
+    $stmt = $conn->prepare("INSERT INTO persona (nombre, apellido, email, direccion, localidad, provincia, pais, carrera, DNI) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param('ssssssssi', $nombre, $apellido, $email, $direccion, $localidad, $provincia, $pais, $carrera, $DNI);
+
+    if ($stmt->execute()) {
+        echo "Datos insertados correctamente.";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+}
+$conn->close();
+
 
     if ($conn->query($sql) === TRUE) {
         echo "<div class='message'>Registro exitoso.</div>";
